@@ -38,10 +38,8 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const mapStateToProps = (state) => {
-  console.log('cart is', state.cart)
-  return ({
+const mapStateToProps = (state) => ({
   products: state.products
-})}
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(SmartComponent)

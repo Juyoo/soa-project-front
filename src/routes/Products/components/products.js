@@ -4,14 +4,15 @@ import IconButton from 'material-ui/IconButton'
 import Subheader from 'material-ui/Subheader'
 import Snackbar from 'material-ui/Snackbar'
 import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart'
-import {green500 as green} from 'material-ui/styles/colors';
+import SmallCartPopOver from '../../Cart/containers/SmallCartPopOverContainer'
+import {green500 as green} from 'material-ui/styles/colors'
 
 const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
-  },
+    justifyContent: 'space-around'
+  }
 }
 
 export class Products extends React.Component {
@@ -19,7 +20,7 @@ export class Products extends React.Component {
     super(props)
     this.state = {
       snackOpen: false,
-      snackMessage: [],
+      snackMessage: '',
       currentProduct: undefined
     }
   }
@@ -27,7 +28,7 @@ export class Products extends React.Component {
   openSnackbar = (product) => {
     this.setState({
       snackOpen: true,
-      snackMessage: Object.assign([], this.state.snackMessage, '\'' + product.name + '\' added to Cart'),
+      snackMessage: [ product.name + '\' ajouté au panier'],
       currentProduct: product
     })
   }
@@ -35,7 +36,7 @@ export class Products extends React.Component {
   closeSnackBar = () => {
     this.setState({
       snackOpen: false,
-      snackMessage: this.state.snackMessage.splice(0, 1),
+      snackMessage: '',
       currentProduct: undefined
     })
   }
@@ -54,8 +55,14 @@ export class Products extends React.Component {
           action="Annuler"
           onActionTouchTap={this.undoAddToCart}
           autoHideDuration={3000}
-          onRequestClose={this.closeSnackBar}
-        />
+          onRequestClose={this.closeSnackBar} />
+
+        <div className="row" style={{marginBottom: 10}}>
+          <div className="col-xs-12">
+            <h1>Produits</h1>
+              <SmallCartPopOver style={{position: 'absolute', right: 15, top: 17}} />
+          </div>
+        </div>
 
         <div style={styles.root}>
           <GridList

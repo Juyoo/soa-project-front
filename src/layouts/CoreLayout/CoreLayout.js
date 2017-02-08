@@ -6,7 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 export const CoreLayout = ({ children }) => (
   <MuiThemeProvider>
-    <div className='text-center'>
+    <div>
       <Header />
       <div className='container-fluid core-layout__viewport'>
         {children}

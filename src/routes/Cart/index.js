@@ -9,7 +9,7 @@ export default (store) => ({
     require.ensure([], (require) => {
       /*  Webpack - use require callback to define
           dependencies for bundling   */
-      const Cart = require('./components/Cart').default
+      const Cart = require('./containers/CartContainer').default
       const reducer = require('./modules/cart').default
 
       /*  Add the reducer to the store on key 'counter'  */

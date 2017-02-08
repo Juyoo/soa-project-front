@@ -1,4 +1,11 @@
-.route--active {
+.routes a {
+  text-decoration: none;
+  :hover:focus {
+    text-decoration: none;
+  }
+}
+
+.route--active>* {
   font-weight: bold;
-  text-decoration: underline;
+  background-color: #f5f5f5;
 }
