@@ -3,6 +3,7 @@ import CoreLayout from '../layouts/CoreLayout'
 import Home from './Home'
 import ProductsRoute from './Products'
 import CartRoute from './Cart'
+import RegisterRoute from './Register'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -12,7 +13,8 @@ export const createRoutes = (store) => ({
   indexRoute  : Home,
   childRoutes : [
     ProductsRoute(store),
-    CartRoute(store)
+    CartRoute(store),
+    RegisterRoute(store)
   ]
 })
 

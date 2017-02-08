@@ -12,15 +12,14 @@ export class Header extends React.Component {
     this.state = {drawerOpen: false}
   }
 
-
   handleClose = () => this.setState({drawerOpen: false})
 
   render = () => (
     <div>
       <AppBar
         className="text-left"
-        title={<span>Choisir un nom</span>}
-        iconElementRight={<FlatButton label="Connexion" />}
+        title={<span>{this.props.client ? this.props.client.firstName + ' ' +this.props.client.lastName : ''}</span>}
+        iconElementRight={this.props.client ? <FlatButton label="Déconnexion" onTouchTap={this.props.onLogout} /> : <FlatButton label="Connexion" onTouchTap={this.props.onLogin} />}
         onLeftIconButtonTouchTap={() => this.setState({drawerOpen: true})} />
       <Drawer
         className='routes'
@@ -29,13 +28,23 @@ export class Header extends React.Component {
         open={this.state.drawerOpen}
         onRequestChange={(open) => this.setState({drawerOpen: open})}
       >
-
-      <IndexLink to='/' activeClassName='route--active'>
-        <MenuItem onTouchTap={this.handleClose}>Acceuil</MenuItem>
-      </IndexLink>
-      <Link to='/products' activeClassName='route--active'>
-        <MenuItem onTouchTap={this.handleClose}>Produits</MenuItem>
-      </Link>
+        {this.props.client
+          ?
+            <div>
+              <IndexLink to='/' activeClassName='route--active'>
+                <MenuItem onTouchTap={this.handleClose}>Acceuil</MenuItem>
+              </IndexLink>
+              <Link to='/products' activeClassName='route--active'>
+                <MenuItem onTouchTap={this.handleClose}>Produits</MenuItem>
+              </Link>
+            </div>
+          :
+            <div>
+              <Link to='/register' activeClassName='route--active'>
+                <MenuItem onTouchTap={this.handleClose}>Connexion</MenuItem>
+              </Link>
+            </div>
+        }
       </Drawer>
     </div>
   )
