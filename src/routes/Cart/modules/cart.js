@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -29,10 +27,10 @@ export const actions = {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [ADD_TO_CART]   : (state, action) => {
-    return addProductToCart(Object.assign([], state), action.product)
+    return addProductToCart(Object.assign([], state), action.product);
   },
   [REMOVE_FROM_CART] : (state, action) => {
-    return removeProductFromCart(Object.assign([], state), action.product)
+    return removeProductFromCart(Object.assign([], state), action.product);
   }
 }
 
@@ -77,7 +75,7 @@ const addProductToCart = (immutableCart, product) => {
 // ------------------------------------
 const initialState = []
 
-export default function dashboardReducer (state = initialState, action) {
+export default function cartReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
 
   return handler ? handler(state, action) : state

@@ -6,34 +6,43 @@ import Divider from 'material-ui/Divider'
 import {grey50} from 'material-ui/styles/colors'
 
 
-export const CartRecap = (props) => (
-  <div className="row">
-    <div className="col-xs-12">
-      <Paper style={{padding: 5}}>
-        <Subheader>Liste des produits</Subheader>
-        <List>
-          {props.cart.map(cartItem => (
-            <CartItemEntry key={cartItem.product.id} cartItem={cartItem} />
-          ))}
-          <Divider />
-          <ListItem
-            key="total"
-            primaryText={'Total'}
-            style={{backgroundColor: grey50, fontWeight: 700}}
-            rightToggle={
-              <div style={{fontSize: 14, fontWeight: 400}}>
-                {props.cart.map(cartItem => cartItem.quantity * cartItem.product.price).reduce((o, t) => o + t) + '€'}
-              </div>
-            }
-          />
-        </List>
-      </Paper>
+class CartRecap extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  validate = () => {
+    return (this.props.cart && this.props.cart.length > 0)
+  }
+
+  render = () => (
+    <div className="row">
+      <div className="col-xs-12">
+        <Paper style={{padding: 5}}>
+          <Subheader>Liste des produits</Subheader>
+          <List>
+            {this.props.cart.map(cartItem => (
+              <CartItemEntry key={cartItem.product.id} cartItem={cartItem} />
+            ))}
+            <Divider />
+            <ListItem
+              key="total"
+              primaryText={'Total'}
+              style={{backgroundColor: grey50, fontWeight: 700}}
+              rightToggle={
+                <div style={{fontSize: 14, fontWeight: 400}}>
+                  {this.props.cart.map(cartItem => cartItem.quantity * cartItem.product.price).reduce((o, t) => o + t) + '€'}
+                </div>
+              }
+            />
+          </List>
+        </Paper>
+      </div>
     </div>
-  </div>
-)
+  )
+}
 CartRecap.propTypes = {
-  cart: React.PropTypes.array.isRequired,
-  onGoToPayment: React.PropTypes.func.isRequired
+  cart: React.PropTypes.array.isRequired
 }
 
 

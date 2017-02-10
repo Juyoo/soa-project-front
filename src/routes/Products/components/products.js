@@ -1,7 +1,6 @@
 import React from 'react'
 import {GridList, GridTile} from 'material-ui/GridList'
 import IconButton from 'material-ui/IconButton'
-import Subheader from 'material-ui/Subheader'
 import Snackbar from 'material-ui/Snackbar'
 import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart'
 import SmallCartPopOver from '../../Cart/containers/SmallCartPopOverContainer'
@@ -15,7 +14,7 @@ const styles = {
   }
 }
 
-export class Products extends React.Component {
+class Products extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -67,7 +66,6 @@ export class Products extends React.Component {
         <div style={styles.root}>
           <GridList
             cellHeight={180}
-            style={styles.gridList}
             cols={3}
           >
             {this.props.products.map((product) => (

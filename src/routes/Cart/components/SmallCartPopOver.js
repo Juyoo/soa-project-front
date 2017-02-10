@@ -1,13 +1,13 @@
 import React from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
 import IconButton from 'material-ui/IconButton'
-import Popover, {PopoverAnimationVertical} from 'material-ui/Popover/Popover'
+import Popover, {PopoverAnimationVertical} from 'material-ui/Popover'
 import Avatar from 'material-ui/Avatar'
 import Divider from 'material-ui/Divider'
 import {List, ListItem} from 'material-ui/List'
 import ShoppingCartIcon from 'material-ui/svg-icons/action/shopping-cart'
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
-import {red500 as red, pinkA200, transparent, grey400, fullWhite, grey50, green500} from 'material-ui/styles/colors'
+import {red500 as red, transparent, grey400, grey50, green500} from 'material-ui/styles/colors'
 
 const styles = {
   label: {
@@ -80,19 +80,9 @@ const CartList = (props) => (
   <List style={{padding: 0}}>
     {props.cart.map((cartItem) => (
       <div key={cartItem.product.id}>
-        <ListItem
-          innerDivStyle={{paddingLeft: 30, paddingBottom: 5, paddingTop: 15, fontSize: 12}}
-          leftAvatar={<Avatar size={30} color={green500} backgroundColor={transparent} style={{left: 0, fontSize: 12}}>{cartItem.quantity}</Avatar>}
-          rightToggle={
-            <IconButton
-              style={{padding: 0, height: 24, width: 24, top: 10}}
-              onTouchTap={() => props.onRemoveFromCart(cartItem.product)}
-            >
-              <DeleteIcon color={red} />
-            </IconButton>
-          }
-          primaryText={cartItem.product.name}
-        />
+        <CartListItem
+          cartItem={cartItem}
+          onRemoveFromCart={() => props.onRemoveFromCart(cartItem.product)} />
         <Divider />
       </div>
     ))}
@@ -124,7 +114,7 @@ CartList.propTypes = {
       id: React.PropTypes.string.isRequired,
       name: React.PropTypes.string.isRequired,
     }),
-    quentity: React.PropTypes.number.isRequired
+    quantity: React.PropTypes.number.isRequired
   }),
   onRemoveFromCart: React.PropTypes.func.isRequired
 }

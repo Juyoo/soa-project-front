@@ -1,10 +1,26 @@
 import React from 'react'
 import CartRecap from './CartSteps/CartRecap'
+import ShippingRecap from './CartSteps/ShippingRecap'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import {Step, Stepper, StepLabel} from 'material-ui/Stepper'
 
 class PaymentStepper extends React.Component {
+  static propTypes = {
+    onResetShipping: React.PropTypes.func.isRequired,
+    onEstimateShipping: React.PropTypes.func.isRequired,
+    cart: React.PropTypes.array.isRequired,
+    client: React.PropTypes.shape({
+      login: React.PropTypes.string.isRequired,
+      password: React.PropTypes.string.isRequired,
+      firstName: React.PropTypes.string.isRequired,
+      lastName: React.PropTypes.string.isRequired,
+      paymentServiceId: React.PropTypes.number.isRequired,
+      paymentServiceToken: React.PropTypes.string.isRequired,
+      providerServiceId: React.PropTypes.string.isRequired
+    }).isRequired
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -15,6 +31,10 @@ class PaymentStepper extends React.Component {
 
   handleNext = () => {
     const {stepIndex} = this.state
+    if (!this.currentStep.validate()) {
+      return;
+    }
+
     this.setState({
       stepIndex: stepIndex + 1,
       finished: stepIndex >= 2
@@ -28,12 +48,21 @@ class PaymentStepper extends React.Component {
     }
   }
 
-  getStepContent(stepIndex) {
+  getStepContent = (stepIndex) => {
     switch (stepIndex) {
       case 0:
-        return <CartRecap cart={this.props.cart} onGoToPayment={this.props.onGoToPayment} />
+        return <CartRecap
+          ref={(cartRecap) => {this.currentStep = cartRecap}}
+          cart={this.props.cart}
+          onGoToPayment={this.props.onGoToPayment} />
       case 1:
-        return <ShippingRecap client={this.props.client}/>
+        return <ShippingRecap
+          ref={(shippingRecap) => {this.currentStep = shippingRecap}}
+          client={this.props.client}
+          cart={this.props.cart}
+          estimatedShippingPrice={this.props.shipping.estimatedShippingPrice}
+          onResetShipping={this.props.onResetShipping}
+          onEstimateShipping={this.props.onEstimateShipping} />
       case 2:
         return <p>'This is the bit I really care about!'</p>
       default:
@@ -41,9 +70,8 @@ class PaymentStepper extends React.Component {
     }
   }
 
-  render() {
+  render = () => {
     const {finished, stepIndex} = this.state
-    const contentStyle = {margin: '0 16px'}
 
     return (
       <div style={{width: '100%', maxWidth: 700, margin: 'auto'}}>
@@ -52,7 +80,7 @@ class PaymentStepper extends React.Component {
           <Step><StepLabel>Livraison</StepLabel></Step>
           <Step><StepLabel>Payement</StepLabel></Step>
         </Stepper>
-        <div style={contentStyle}>
+        <div style={{margin: '0 16px'}}>
           <div>
             {this.getStepContent(stepIndex)}
             <div style={{marginTop: 12}}>
@@ -73,7 +101,6 @@ class PaymentStepper extends React.Component {
       </div>
     )
   }
-
 }
 
 export default PaymentStepper

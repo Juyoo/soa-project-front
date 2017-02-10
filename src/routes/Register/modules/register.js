@@ -74,7 +74,7 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 const initialState = null
 
-export default function dashboardReducer (state = initialState, action) {
+export default function registerReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
 
   return handler ? handler(state, action) : state

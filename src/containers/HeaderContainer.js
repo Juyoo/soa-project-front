@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Header from '../components/Header'
+import Header from '../components/Header/Header'
 import {browserHistory} from 'react-router'
 import {logout} from '../routes/Register/modules/register'
 

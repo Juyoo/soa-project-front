@@ -6,7 +6,7 @@ import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
 import './Header.scss'
 
-export class Header extends React.Component {
+class Header extends React.Component {
   constructor(props) {
     super(props)
     this.state = {drawerOpen: false}
