@@ -12,10 +12,12 @@ export default (store) => ({
       const Cart = require('./containers/CartContainer').default
       //const cartReducer = require('./modules/cart').default
       const shippingReducer = require('./modules/shipping').default
+      const addressReducer = require('./modules/address').default
 
       /*  Add the reducer to the store on key 'counter'  */
       //injectReducer(store, { key: 'cart', reducer: cartReducer })
       injectReducer(store, { key: 'shipping', reducer: shippingReducer })
+      injectReducer(store, { key: 'address', reducer: addressReducer })
 
       /*  Return getComponent   */
       cb(null, Cart)

@@ -22,10 +22,10 @@ export class ShippingRecap extends React.Component {
   constructor(props)  {
     super(props)
     this.state = {
-      streetNumber: '9',
-    	street: 'rue de romagnat',
-    	zip: '63000',
-    	city: 'Clermont-Ferrand'
+      streetNumberError: '',
+      streetError: '',
+      zipError: '',
+      cityError: ''
     }
   }
 
@@ -39,19 +39,19 @@ export class ShippingRecap extends React.Component {
 
   validateTextFields = () => {
     let hasError = false
-    if (this.state.streetNumber === '') {
+    if (this.props.streetNumber === '') {
       this.setState({streetNumberError: 'Champ requis'})
       hasError = true
     }
-    if (this.state.street === '') {
+    if (this.props.street === '') {
       this.setState({streetError: 'Champ requis'})
       hasError = true
     }
-    if (this.state.zip === '') {
+    if (this.props.zip === '') {
       this.setState({zipError: 'Champ requis'})
       hasError = true
     }
-    if (this.state.city === '') {
+    if (this.props.city === '') {
       this.setState({cityError: 'Champ requis'})
       hasError = true
     }
@@ -63,13 +63,35 @@ export class ShippingRecap extends React.Component {
     if (!this.validateTextFields()) {
       return
     }
-    const {streetNumber, street, zip, city} = this.state
+
     this.props.onEstimateShipping(
       this.props.client,
       this.props.cart,
-      { streetNumber, street, zip, city }
+      this.props.address
     )
   }
+
+  onUpdateStreetNumber = (event) => {
+    const {street, zip, city} = this.props.address
+    this.props.onUpdateAddress({streetNumber: event.target.value, street, zip, city})
+    this.setState({streetNumberError: ''})
+  }
+  onUpdateStreet = (event) => {
+    const {streetNumber, zip, city} = this.props.address
+    this.props.onUpdateAddress({streetNumber, street: event.target.value, zip, city})
+    this.setState({streetError: ''})
+  }
+  onUpdateZip = (event) => {
+    const {streetNumber, street, city} = this.props.address
+    this.props.onUpdateAddress({streetNumber, street, zip: event.target.value, city})
+    this.setState({zipError: ''})
+  }
+  onUpdateCity = (event) => {
+    const {streetNumber, street, zip} = this.props.address
+    this.props.onUpdateAddress({streetNumber, street, zip, city: event.target.value})
+    this.setState({cityError: ''})
+  }
+
 
   render = () => (
     <div className="row">
@@ -81,32 +103,32 @@ export class ShippingRecap extends React.Component {
             floatingLabelStyle={{fontWeight: 400}}
             floatingLabelText="Numero de rue"
             errorText={this.state.streetNumberError ? <div style={{position: 'absolute'}}>{this.state.streetNumberError}</div> : ''}
-            value={this.state.streetNumber}
-            onChange={(event) => this.setState({streetNumber: event.target.value, streetNumberError: ''})}
+            value={this.props.address.streetNumber}
+            onChange={(event) => this.onUpdateStreetNumber(event)}
           />
           <TextField
             style={{fontWeight: 400}}
             floatingLabelStyle={{fontWeight: 400}}
             floatingLabelText="Rue"
             errorText={this.state.streetError ? <div style={{position: 'absolute'}}>{this.state.streetError}</div> : ''}
-            value={this.state.street}
-            onChange={(event) => this.setState({street: event.target.value, streetError: ''})}
+            value={this.props.address.street}
+            onChange={this.onUpdateStreet}
           /><br />
           <TextField
             style={{fontWeight: 400, marginRight: 50}}
             floatingLabelStyle={{fontWeight: 400}}
             floatingLabelText="Code postal"
             errorText={this.state.zipError ? <div style={{position: 'absolute'}}>{this.state.zipError}</div> : ''}
-            value={this.state.zip}
-            onChange={(event) => this.setState({zip: event.target.value, zipError: ''})}
+            value={this.props.address.zip}
+            onChange={this.onUpdateZip}
           />
           <TextField
             style={{fontWeight: 400}}
             floatingLabelStyle={{fontWeight: 400}}
             floatingLabelText="Ville"
             errorText={this.state.cityError ? <div style={{position: 'absolute'}}>{this.state.cityError}</div> : ''}
-            value={this.state.city}
-            onChange={(event) => this.setState({city: event.target.value, cityError: ''})}
+            value={this.props.address.city}
+            onChange={this.onUpdateCity}
           /><br />
         <div style={{marginTop: 25}} className="text-right">
             {this.props.estimatedShippingPrice ? this.props.estimatedShippingPrice + '€' : ''}

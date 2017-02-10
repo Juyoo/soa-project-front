@@ -1,14 +1,18 @@
 import React from 'react'
 import CartRecap from './CartSteps/CartRecap'
 import ShippingRecap from './CartSteps/ShippingRecap'
+import PaymentRecap from './CartSteps/PaymentRecap'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import {Step, Stepper, StepLabel} from 'material-ui/Stepper'
+import FetchingIndicator from '../../../components/FetchingIndicator'
 
 class PaymentStepper extends React.Component {
   static propTypes = {
     onResetShipping: React.PropTypes.func.isRequired,
     onEstimateShipping: React.PropTypes.func.isRequired,
+    onValidateOrder: React.PropTypes.func.isRequired,
+    onUpdateAddress: React.PropTypes.func.isRequired,
     cart: React.PropTypes.array.isRequired,
     client: React.PropTypes.shape({
       login: React.PropTypes.string.isRequired,
@@ -25,7 +29,7 @@ class PaymentStepper extends React.Component {
     super(props)
     this.state = {
       finished: false,
-      stepIndex: 0
+      stepIndex: 0,
     }
   }
 
@@ -35,10 +39,15 @@ class PaymentStepper extends React.Component {
       return;
     }
 
+    const isFinished = stepIndex >= 2
     this.setState({
       stepIndex: stepIndex + 1,
-      finished: stepIndex >= 2
+      finished: isFinished
     })
+    if (isFinished) {
+      const {client, cart, address} = this.props
+      this.props.onValidateOrder(client, cart, address)
+    }
   }
 
   handlePrev = () => {
@@ -53,20 +62,26 @@ class PaymentStepper extends React.Component {
       case 0:
         return <CartRecap
           ref={(cartRecap) => {this.currentStep = cartRecap}}
-          cart={this.props.cart}
-          onGoToPayment={this.props.onGoToPayment} />
+          cart={this.props.cart} />
       case 1:
         return <ShippingRecap
-          ref={(shippingRecap) => {this.currentStep = shippingRecap}}
+          ref={(shippingRecap) => this.currentStep = shippingRecap}
           client={this.props.client}
           cart={this.props.cart}
           estimatedShippingPrice={this.props.shipping.estimatedShippingPrice}
           onResetShipping={this.props.onResetShipping}
-          onEstimateShipping={this.props.onEstimateShipping} />
+          onEstimateShipping={this.props.onEstimateShipping}
+          onUpdateAddress={this.props.onUpdateAddress}
+          address={this.props.address} />
       case 2:
-        return <p>'This is the bit I really care about!'</p>
+        return <PaymentRecap
+            ref={(paymentRecap) => {this.currentStep = paymentRecap}}
+            client={this.props.client}
+            cart={this.props.cart}
+            estimatedShippingPrice={this.props.shipping.estimatedShippingPrice}
+          />
       default:
-        return <p>'Commande validée, afficher la facture ici'</p>
+        return <FetchingIndicator />
     }
   }
 
@@ -83,19 +98,21 @@ class PaymentStepper extends React.Component {
         <div style={{margin: '0 16px'}}>
           <div>
             {this.getStepContent(stepIndex)}
-            <div style={{marginTop: 12}}>
-              <FlatButton
-                label="Précédent"
-                disabled={stepIndex === 0}
-                onTouchTap={this.handlePrev}
-                style={{marginRight: 12}}
-              />
-              <RaisedButton
-                label={stepIndex === 2 ? 'Terminer' : 'Suivant'}
-                primary={true}
-                onTouchTap={this.handleNext}
-              />
-            </div>
+            {!this.state.finished &&
+              <div style={{marginTop: 12}}>
+                <FlatButton
+                  label="Précédent"
+                  disabled={stepIndex === 0}
+                  onTouchTap={this.handlePrev}
+                  style={{marginRight: 12}}
+                />
+                <RaisedButton
+                  label={stepIndex === 2 ? 'Terminer' : 'Suivant'}
+                  primary={true}
+                  onTouchTap={this.handleNext}
+                />
+              </div>
+            }
           </div>
         </div>
       </div>

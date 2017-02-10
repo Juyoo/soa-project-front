@@ -18,9 +18,9 @@ class CartRecap extends React.Component {
   render = () => (
     <div className="row">
       <div className="col-xs-12">
-        <Paper style={{padding: 5}}>
-          <Subheader>Liste des produits</Subheader>
-          <List>
+        <Paper style={{padding: 15}}>
+          <Subheader style={{marginLeft: -15}}>Liste des produits</Subheader>
+          <List style={{paddingBottom: 0}}>
             {this.props.cart.map(cartItem => (
               <CartItemEntry key={cartItem.product.id} cartItem={cartItem} />
             ))}
@@ -30,7 +30,7 @@ class CartRecap extends React.Component {
               primaryText={'Total'}
               style={{backgroundColor: grey50, fontWeight: 700}}
               rightToggle={
-                <div style={{fontSize: 14, fontWeight: 400}}>
+                <div className="text-right" style={{fontSize: 14, fontWeight: 400, width: 120}}>
                   {this.props.cart.map(cartItem => cartItem.quantity * cartItem.product.price).reduce((o, t) => o + t) + '€'}
                 </div>
               }
@@ -46,10 +46,10 @@ CartRecap.propTypes = {
 }
 
 
-const CartItemEntry = (props) => (
+export const CartItemEntry = (props) => (
   <ListItem
     style={{fontWeight: 400, marginBottom: 0}}
-    rightToggle={<div style={{fontSize: 14, fontWeight: 400}}>{props.cartItem.quantity * props.cartItem.product.price} €</div>}
+    rightToggle={<div className="text-right" style={{fontSize: 14, fontWeight: 400}}>{props.cartItem.quantity * props.cartItem.product.price} €</div>}
     primaryText={props.cartItem.product.name}
     secondaryText={props.cartItem.quantity + ' dans le panier'}
   />

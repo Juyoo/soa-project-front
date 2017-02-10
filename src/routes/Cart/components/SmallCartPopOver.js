@@ -61,7 +61,7 @@ class SmallCartPopOver extends React.Component {
         >
           <CartList cart={this.props.cart} onRemoveFromCart={this.props.onRemoveFromCart} />
           <RaisedButton
-            onTouchTap={this.props.onGoToCart}
+            onTouchTap={() => this.props.onGoToCart(this.props.client)}
             label="Acceder a mon panier"
             backgroundColor={grey400}
             labelColor={grey50}

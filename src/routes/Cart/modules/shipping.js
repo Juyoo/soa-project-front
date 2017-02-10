@@ -1,8 +1,12 @@
 import axios from 'axios'
+import {browserHistory} from 'react-router'
+import {emptyCart} from './cart'
 
 // ------------------------------------
 // Constants
 // ------------------------------------
+export const VALIDATE_ORDER_SUCCESS = 'VALIDATE_ORDER_SUCCESS'
+export const VALIDATE_ORDER_ERROR = 'VALIDATE_ORDER_ERROR'
 export const ESTIMATE_SHIPPING_COST_SUCCESS = 'ESTIMATE_SHIPPING_COST_SUCCESS'
 export const ESTIMATE_SHIPPING_COST_ERROR = 'ESTIMATE_SHIPPING_COST_ERROR'
 export const RESET_SHIPPING = 'RESET_SHIPPING'
@@ -10,6 +14,42 @@ export const RESET_SHIPPING = 'RESET_SHIPPING'
 // ------------------------------------
 // Actions
 // ------------------------------------
+export const validateOrder = (client, cart, address) => {
+  return dispatch => {
+    axios({
+      url: 'http://localhost:8080/order',
+      method: 'post',
+      data: {
+        client,
+        cart: {
+          productWithWties: cart
+        },
+        recipientAddress: address
+      },
+      responseType: 'json',
+      contentType: 'json'
+    })
+    .then(response => {
+      dispatch(validateOrderSuccess(response.data))
+      dispatch(emptyCart())
+      browserHistory.push('/products')
+    })
+    .catch(response => {
+      dispatch(validateOrderError(response.data))
+    })
+  }
+}
+
+export const validateOrderSuccess = (shipping) => ({
+  shipping,
+  type: VALIDATE_ORDER_SUCCESS
+})
+
+export const validateOrderError = (error) => ({
+  error,
+  type: VALIDATE_ORDER_ERROR
+})
+
 export const estimateShipping = (client, cart, address) => {
   return dispatch => {
     axios({
@@ -26,10 +66,10 @@ export const estimateShipping = (client, cart, address) => {
       contentType: 'json'
     })
     .then(response => {
-      dispatch(estimateShippingSuccess(response.data));
+      dispatch(estimateShippingSuccess(response.data))
     })
     .catch(response => {
-      dispatch(estimateShippingError(response.data));
+      dispatch(estimateShippingError(response.data))
     })
   }
 }
@@ -49,6 +89,9 @@ export const resetShipping = () => ({
 })
 
 export const actions = {
+  validateOrder,
+  validateOrderSuccess,
+  validateOrderError,
   estimateShipping,
   estimateShippingSuccess,
   estimateShippingError,
@@ -59,6 +102,12 @@ export const actions = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
+  [VALIDATE_ORDER_SUCCESS]          : (state, action) => {
+    return state
+  },
+  [VALIDATE_ORDER_ERROR]            : (state, action) => {
+    return state
+  },
   [ESTIMATE_SHIPPING_COST_SUCCESS]  : (state, action) => {
     return Object.assign({}, state, {estimatedShippingPrice: parseFloat(action.price.price.toFixed(2)), error: undefined})
   },

@@ -1,12 +1,17 @@
 // ------------------------------------
 // Constants
 // ------------------------------------
+export const EMPTY_CART = 'EMPTY_CART'
 export const ADD_TO_CART = 'ADD_TO_CART'
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 
 // ------------------------------------
 // Actions
 // ------------------------------------
+export const emptyCart = () => ({
+  type: EMPTY_CART
+})
+
 export const addToCart = (product) => ({
   product,
   type: ADD_TO_CART
@@ -18,6 +23,7 @@ export const removeFromCart = (product) => ({
 })
 
 export const actions = {
+  emptyCart,
   addToCart,
   removeFromCart
 }
@@ -26,11 +32,14 @@ export const actions = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
+  [EMPTY_CART]    : (state, action) => {
+    return []
+  },
   [ADD_TO_CART]   : (state, action) => {
-    return addProductToCart(Object.assign([], state), action.product);
+    return addProductToCart(Object.assign([], state), action.product)
   },
   [REMOVE_FROM_CART] : (state, action) => {
-    return removeProductFromCart(Object.assign([], state), action.product);
+    return removeProductFromCart(Object.assign([], state), action.product)
   }
 }
 
