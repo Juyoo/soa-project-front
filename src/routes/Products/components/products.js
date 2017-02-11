@@ -1,11 +1,11 @@
 import React from 'react'
-import {productPropTypes} from '../../../proptypes'
+import { productPropTypes } from '../../../proptypes'
 import SmallCartPopOver from '../../Cart/containers/SmallCartPopOverContainer'
-import {GridList, GridTile} from 'material-ui/GridList'
+import { GridList, GridTile } from 'material-ui/GridList'
 import IconButton from 'material-ui/IconButton'
 import Snackbar from 'material-ui/Snackbar'
 import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart'
-import {green500 as green} from 'material-ui/styles/colors'
+import { green500 as green } from 'material-ui/styles/colors'
 
 const styles = {
   root: {
@@ -22,7 +22,7 @@ class Products extends React.Component {
     products: React.PropTypes.arrayOf(productPropTypes)
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       snackOpen: false,
@@ -34,7 +34,7 @@ class Products extends React.Component {
   openSnackbar = (product) => {
     this.setState({
       snackOpen: true,
-      snackMessage: [ product.name + '\' ajouté au panier'],
+      snackMessage: [ product.name + '\' ajouté au panier' ],
       currentProduct: product
     })
   }
@@ -53,20 +53,20 @@ class Products extends React.Component {
   }
 
   render = () => (
-    <div className="row">
-      <div className="col-xs-12">
+    <div className='row'>
+      <div className='col-xs-12'>
         <Snackbar
           open={this.state.snackOpen}
           message={this.state.snackMessage}
-          action="Annuler"
+          action='Annuler'
           onActionTouchTap={this.undoAddToCart}
           autoHideDuration={3000}
           onRequestClose={this.closeSnackBar} />
 
-        <div className="row" style={{marginBottom: 10}}>
-          <div className="col-xs-12">
+        <div className='row' style={{ marginBottom: 10 }}>
+          <div className='col-xs-12'>
             <h1>Produits</h1>
-              <SmallCartPopOver style={{position: 'absolute', right: 15, top: 17}} />
+            <SmallCartPopOver style={{ position: 'absolute', right: 15, top: 17 }} />
           </div>
         </div>
 
@@ -80,9 +80,9 @@ class Products extends React.Component {
                 key={product.id}
                 title={product.name}
                 subtitle={<span>{product.price} €</span>}
-                titleBackground="rgba(0, 0, 0, 0.6)"
+                titleBackground='rgba(0, 0, 0, 0.6)'
                 actionIcon={
-                  <IconButton tooltip="Ajouter au panier" tooltipPosition="top-left">
+                  <IconButton tooltip='Ajouter au panier' tooltipPosition='top-left'>
                     <AddShoppingCart
                       color={green}
                       onTouchTap={() => {

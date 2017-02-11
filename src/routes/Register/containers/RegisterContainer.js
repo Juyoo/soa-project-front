@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import Register from '../components/Register'
-import {register} from '../modules/register'
-
+import { register } from '../modules/register'
 
 const mapDispatchToProps = (dispatch) => {
   return {

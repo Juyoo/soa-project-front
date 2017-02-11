@@ -1,20 +1,21 @@
 import { connect } from 'react-redux'
+import { productPropTypes } from '../../../proptypes'
 import Products from '../components/Products'
-import {queryProducts} from '../modules/products'
-import {addToCart, removeFromCart} from '../../Cart/modules/cart'
+import { queryProducts } from '../modules/products'
+import { addToCart, removeFromCart } from '../../Cart/modules/cart'
 import FetchingIndicator from '../../../components/FetchingIndicator'
 import React from 'react'
 
 class SmartComponent extends React.Component {
-  constructor(props) {
-    super(props)
+  static propTypes = {
+    products: React.PropTypes.arrayOf(productPropTypes)
   }
 
   hasData = () => (
     this.props.products
   )
 
-  render() {
+  render () {
     if (this.hasData()) {
       return <Products {...this.props} />
     } else {
@@ -22,13 +23,12 @@ class SmartComponent extends React.Component {
     }
   }
 
-  renderLoading() {
+  renderLoading () {
     return (
       <FetchingIndicator />
     )
   }
 }
-
 
 const mapDispatchToProps = (dispatch) => {
   dispatch(queryProducts())

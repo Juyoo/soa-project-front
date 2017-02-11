@@ -60,7 +60,7 @@ const removeProductFromCart = (immutableCart, product) => {
       immutableCart[index].quantity = immutableCart[index].quantity - 1
     }
   })
-  return immutableCart;
+  return immutableCart
 }
 const addProductToCart = (immutableCart, product) => {
   if (findProductsInCart(immutableCart, product).length === 0) {
@@ -76,7 +76,7 @@ const addProductToCart = (immutableCart, product) => {
       immutableCart[index].quantity = immutableCart[index].quantity + 1
     }
   })
-  return immutableCart;
+  return immutableCart
 }
 
 // ------------------------------------

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {browserHistory} from 'react-router'
+import { browserHistory } from 'react-router'
 
 // ------------------------------------
 // Constants
@@ -65,16 +65,16 @@ export const actions = {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [REGISTER_ATTEMPT]   : (state, action) => {
-    return Object.assign({}, state, {isFetching: true, isLoggedIn: false})
+    return Object.assign({}, state, { isFetching: true, isLoggedIn: false })
   },
   [REGISTER_SUCCESS]   : (state, action) => {
-    return Object.assign({}, state, {client: action.client, isFetching: false, isLoggedIn: true})
+    return Object.assign({}, state, { client: action.client, isFetching: false, isLoggedIn: true })
   },
   [REGISTER_ERROR]     : (state, action) => {
-    return Object.assign({}, state, {isFetching: false, isLoggedIn: false})
+    return Object.assign({}, state, { isFetching: false, isLoggedIn: false })
   },
   [LOGOUT]              : (state, action) => {
-    return Object.assign({}, state, {client: undefined, isLoggedIn: false})
+    return Object.assign({}, state, { client: undefined, isLoggedIn: false })
   }
 }
 

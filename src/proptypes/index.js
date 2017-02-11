@@ -27,9 +27,9 @@ export const productPropTypes = React.PropTypes.shape({
   available: React.PropTypes.bool.isRequired
 })
 
-export const cartPropTypes = React.PropTypes.arrayOf(
-  React.PropTypes.shape({
-    product: productPropTypes.isRequired,
-    quantity: React.PropTypes.number.isRequired
-  })
-)
+export const cartItemPropTypes = React.PropTypes.shape({
+  product: productPropTypes.isRequired,
+  quantity: React.PropTypes.number.isRequired
+})
+
+export const cartPropTypes = React.PropTypes.arrayOf(cartItemPropTypes)

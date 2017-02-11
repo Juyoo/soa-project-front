@@ -1,6 +1,6 @@
 import axios from 'axios'
-import {browserHistory} from 'react-router'
-import {emptyCart} from './cart'
+import { browserHistory } from 'react-router'
+import { emptyCart } from './cart'
 
 // ------------------------------------
 // Constants
@@ -117,7 +117,7 @@ const ACTION_HANDLERS = {
     return state
   },
   [ESTIMATE_SHIPPING_COST_ATTEMPT]  : (state, action) => {
-    return Object.assign({}, state, {isFetchingEstimate: true})
+    return Object.assign({}, state, { isFetchingEstimate: true })
   },
   [ESTIMATE_SHIPPING_COST_SUCCESS]  : (state, action) => {
     return Object.assign({}, state, {
@@ -147,8 +147,8 @@ const initialState = {
   isFetchingEstimate: false
 }
 
-export default function shippingReducer(state = initialState, action) {
-  const handler = ACTION_HANDLERS[action.type];
+export default function shippingReducer (state = initialState, action) {
+  const handler = ACTION_HANDLERS[action.type]
 
   return handler ? handler(state, action) : state
 }

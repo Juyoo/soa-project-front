@@ -13,15 +13,14 @@ const styles = {
   progress: {
     top: '50%',
     bottom: '50%',
-    top: '50%',
     transform: 'translate(0, -50%)'
   }
 }
 
 export const OverlayFetchingIndicator = (props) => {
-  const {style, containerStyle, ...rest} = props
+  const { style, containerStyle, ...rest } = props
   return (
-    <div className="text-center" style={Object.assign({}, styles.container, containerStyle)}>
+    <div className='text-center' style={Object.assign({}, styles.container, containerStyle)}>
       <CircularProgress {...rest} style={Object.assign({}, styles.progress, style)} />
     </div>
   )

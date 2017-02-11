@@ -20,7 +20,7 @@ export const actions = {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [UPDATE_ADDRESS]   : (state, action) => {
-    return Object.assign({}, state, {...action.address});
+    return Object.assign({}, state, { ...action.address })
   }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import {clientPropTypes, cartPropTypes, addressPropTypes} from '../../../../proptypes'
+import { clientPropTypes, cartPropTypes, addressPropTypes } from '../../../../proptypes'
 import OverlayFetchingIndicator from '../../../../components/OverlayFetchingIndicator'
 import Paper from 'material-ui/Paper'
 import Subheader from 'material-ui/Subheader'
@@ -18,7 +18,7 @@ export class ShippingRecap extends React.Component {
     address: addressPropTypes
   }
 
-  constructor(props)  {
+  constructor (props) {
     super(props)
     this.state = {
       streetNumberError: '',
@@ -39,19 +39,19 @@ export class ShippingRecap extends React.Component {
   validateTextFields = () => {
     let hasError = false
     if (this.props.address.streetNumber === '') {
-      this.setState({streetNumberError: 'Champ requis'})
+      this.setState({ streetNumberError: 'Champ requis' })
       hasError = true
     }
     if (this.props.address.street === '') {
-      this.setState({streetError: 'Champ requis'})
+      this.setState({ streetError: 'Champ requis' })
       hasError = true
     }
     if (this.props.address.zip === '') {
-      this.setState({zipError: 'Champ requis'})
+      this.setState({ zipError: 'Champ requis' })
       hasError = true
     }
     if (this.props.address.city === '') {
-      this.setState({cityError: 'Champ requis'})
+      this.setState({ cityError: 'Champ requis' })
       hasError = true
     }
 
@@ -71,71 +71,84 @@ export class ShippingRecap extends React.Component {
   }
 
   onUpdateStreetNumber = (event) => {
-    const {street, zip, city} = this.props.address
-    this.props.onUpdateAddress({streetNumber: event.target.value, street, zip, city})
-    this.setState({streetNumberError: ''})
+    const { street, zip, city } = this.props.address
+    this.props.onUpdateAddress({ streetNumber: event.target.value, street, zip, city })
+    this.setState({ streetNumberError: '' })
   }
   onUpdateStreet = (event) => {
-    const {streetNumber, zip, city} = this.props.address
-    this.props.onUpdateAddress({streetNumber, street: event.target.value, zip, city})
-    this.setState({streetError: ''})
+    const { streetNumber, zip, city } = this.props.address
+    this.props.onUpdateAddress({ streetNumber, street: event.target.value, zip, city })
+    this.setState({ streetError: '' })
   }
   onUpdateZip = (event) => {
-    const {streetNumber, street, city} = this.props.address
-    this.props.onUpdateAddress({streetNumber, street, zip: event.target.value, city})
-    this.setState({zipError: ''})
+    const { streetNumber, street, city } = this.props.address
+    this.props.onUpdateAddress({ streetNumber, street, zip: event.target.value, city })
+    this.setState({ zipError: '' })
   }
   onUpdateCity = (event) => {
-    const {streetNumber, street, zip} = this.props.address
-    this.props.onUpdateAddress({streetNumber, street, zip, city: event.target.value})
-    this.setState({cityError: ''})
+    const { streetNumber, street, zip } = this.props.address
+    this.props.onUpdateAddress({ streetNumber, street, zip, city: event.target.value })
+    this.setState({ cityError: '' })
   }
 
-
   render = () => (
-    <div className="row">
-      <div className="col-xs-12">
-        <Paper style={{padding: 15, position: 'relative'}}>
-          {this.props.isFetchingEstimate && <OverlayFetchingIndicator containerStyle={{marginLeft: -15, marginTop: -15}} />}
-          <Subheader style={{marginLeft: -15}}>Addresse</Subheader>
+    <div className='row'>
+      <div className='col-xs-12'>
+        <Paper style={{ padding: 15, position: 'relative' }}>
+          {this.props.isFetchingEstimate &&
+            <OverlayFetchingIndicator containerStyle={{ marginLeft: -15, marginTop: -15 }} />
+          }
+          <Subheader style={{ marginLeft: -15 }}>Addresse</Subheader>
           <TextField
-            style={{fontWeight: 400, marginRight: 50}}
-            floatingLabelStyle={{fontWeight: 400}}
-            floatingLabelText="Numero de rue"
-            errorText={this.state.streetNumberError ? <div style={{position: 'absolute'}}>{this.state.streetNumberError}</div> : ''}
+            style={{ fontWeight: 400, marginRight: 50 }}
+            floatingLabelStyle={{ fontWeight: 400 }}
+            floatingLabelText='Numero de rue'
+            errorText={this.state.streetNumberError
+              ? <div style={{ position: 'absolute' }}>{this.state.streetNumberError}</div>
+              : ''
+            }
             value={this.props.address.streetNumber}
             onChange={(event) => this.onUpdateStreetNumber(event)}
           />
           <TextField
-            style={{fontWeight: 400}}
-            floatingLabelStyle={{fontWeight: 400}}
-            floatingLabelText="Rue"
-            errorText={this.state.streetError ? <div style={{position: 'absolute'}}>{this.state.streetError}</div> : ''}
+            style={{ fontWeight: 400 }}
+            floatingLabelStyle={{ fontWeight: 400 }}
+            floatingLabelText='Rue'
+            errorText={this.state.streetError
+              ? <div style={{ position: 'absolute' }}>{this.state.streetError}</div>
+              : ''
+            }
             value={this.props.address.street}
             onChange={this.onUpdateStreet}
           /><br />
           <TextField
-            style={{fontWeight: 400, marginRight: 50}}
-            floatingLabelStyle={{fontWeight: 400}}
-            floatingLabelText="Code postal"
-            errorText={this.state.zipError ? <div style={{position: 'absolute'}}>{this.state.zipError}</div> : ''}
+            style={{ fontWeight: 400, marginRight: 50 }}
+            floatingLabelStyle={{ fontWeight: 400 }}
+            floatingLabelText='Code postal'
+            errorText={this.state.zipError
+              ? <div style={{ position: 'absolute' }}>{this.state.zipError}</div>
+              : ''
+            }
             value={this.props.address.zip}
             onChange={this.onUpdateZip}
           />
           <TextField
-            style={{fontWeight: 400}}
-            floatingLabelStyle={{fontWeight: 400}}
-            floatingLabelText="Ville"
-            errorText={this.state.cityError ? <div style={{position: 'absolute'}}>{this.state.cityError}</div> : ''}
+            style={{ fontWeight: 400 }}
+            floatingLabelStyle={{ fontWeight: 400 }}
+            floatingLabelText='Ville'
+            errorText={this.state.cityError
+              ? <div style={{ position: 'absolute' }}>{this.state.cityError}</div>
+              : ''
+            }
             value={this.props.address.city}
             onChange={this.onUpdateCity}
           /><br />
-        <div style={{marginTop: 25}} className="text-right">
+          <div style={{ marginTop: 25 }} className='text-right'>
             {this.props.estimatedShippingPrice ? this.props.estimatedShippingPrice + '€' : ''}
             <RaisedButton
-              style={{marginLeft: 15}}
-              label="Calculer les frais de livraisons"
-              primary={true}
+              style={{ marginLeft: 15 }}
+              label='Calculer les frais de livraisons'
+              primary
               disabled={this.props.isFetchingEstimate}
               onTouchTap={this.handleEstimateShipping}
             />

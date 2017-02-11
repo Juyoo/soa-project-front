@@ -1,4 +1,3 @@
-import { injectReducer } from '../../store/reducers'
 
 export default (store) => ({
   path : 'register',
@@ -10,15 +9,15 @@ export default (store) => ({
       /*  Webpack - use require callback to define
           dependencies for bundling   */
       const Register = require('./containers/RegisterContainer').default
-      //const reducer = require('./modules/register').default
+      // const reducer = require('./modules/register').default
 
       /*  Add the reducer to the store on key 'counter'  */
-      //injectReducer(store, { key: 'client', reducer })
+      // injectReducer(store, { key: 'client', reducer })
 
       /*  Return getComponent   */
       cb(null, Register)
 
     /* Webpack named bundle   */
-  }, 'register')
+    }, 'register')
   }
 })

@@ -1,18 +1,23 @@
 import React from 'react'
+import { cartPropTypes } from '../../../proptypes'
 import { connect } from 'react-redux'
-import {browserHistory} from 'react-router'
+import { browserHistory } from 'react-router'
 import Cart from '../components/Cart'
-import {removeFromCart} from '../../Cart/modules/cart'
-import {estimateShipping, resetShipping, validateOrder} from '../../Cart/modules/shipping'
-import {updateAddress} from '../../Cart/modules/address'
+import { removeFromCart } from '../../Cart/modules/cart'
+import { estimateShipping, resetShipping, validateOrder } from '../../Cart/modules/shipping'
+import { updateAddress } from '../../Cart/modules/address'
 
 const SmartCompnent = (props) => {
-  const {onRedirectWhenNoCart, ...rest} = props
-  if (!props.cart || props.cart.length == 0) {
+  const { onRedirectWhenNoCart, ...rest } = props
+  if (!props.cart || props.cart.length === 0) {
     onRedirectWhenNoCart()
-    return <div></div>
+    return <div />
   }
   return (<Cart {...rest} />)
+}
+SmartCompnent.propTypes = {
+  onRedirectWhenNoCart: React.PropTypes.func.isRequired,
+  cart: cartPropTypes.isRequired
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -30,7 +35,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => ({
   cart: state.cart,
   client: state.client.client,
-  shipping: state.shipping,
+  estimatedShippingPrice: state.shipping.estimatedShippingPrice,
   address: state.address,
   isFetchingEstimate: state.shipping.isFetchingEstimate
 })
