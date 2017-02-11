@@ -1,4 +1,5 @@
 import React from 'react'
+import {cartPropTypes} from '../../../proptypes'
 import RaisedButton from 'material-ui/RaisedButton'
 import IconButton from 'material-ui/IconButton'
 import Popover, {PopoverAnimationVertical} from 'material-ui/Popover'
@@ -16,6 +17,12 @@ const styles = {
 }
 
 class SmallCartPopOver extends React.Component {
+  static propTypes = {
+    onRemoveFromCart: React.PropTypes.func.isRequired,
+    onGoToCart: React.PropTypes.func.isRequired,
+    cart: cartPropTypes.isRequired
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -69,11 +76,6 @@ class SmallCartPopOver extends React.Component {
         </Popover>
     </div>
   )
-}
-SmallCartPopOver.propTypes = {
-  cart:             React.PropTypes.array.isRequired,
-  onRemoveFromCart: React.PropTypes.func.isRequired,
-  onGoToCart:       React.PropTypes.func.isRequired
 }
 
 const CartList = (props) => (

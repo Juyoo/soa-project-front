@@ -1,25 +1,29 @@
+import React from 'react'
 import { connect } from 'react-redux'
 import {browserHistory} from 'react-router'
 import SmallCartPopOver from '../components/SmallCartPopOver'
 import {removeFromCart} from '../../Cart/modules/cart'
 
-const mapDispatchToProps = (dispatch, a, b, c) => {
+const SmartComponent = (props) => {
+  const {isLoggedIn, ...rest} = props
+  const onGoToCart = props.isLoggedIn ? () => {browserHistory.push('/cart')} : () => {browserHistory.push('/register')}
+
+  return (<SmallCartPopOver {...rest} onGoToCart={onGoToCart} />)
+}
+SmartComponent.propTypes = {
+  isLoggedIn: React.PropTypes.bool.isRequired
+}
+
+const mapDispatchToProps = (dispatch) => {
   return {
-    onGoToCart: (client) => {
-      // if client and client.password are set, it means the client is connected... what a dirty way to do this....
-      if (client && client.password) {
-        browserHistory.push('/cart')
-      } else {
-        browserHistory.push('/register')
-      }
-    },
     onRemoveFromCart: (product) => dispatch(removeFromCart(product))
   }
 }
 
 const mapStateToProps = (state) => ({
   cart: state.cart,
-  client: state.client
+  client: state.client.client,
+  isLoggedIn: state.client.isLoggedIn
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(SmallCartPopOver)
+export default connect(mapStateToProps, mapDispatchToProps)(SmartComponent)

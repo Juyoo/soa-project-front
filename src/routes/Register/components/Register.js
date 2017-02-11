@@ -1,9 +1,15 @@
 import React from 'react'
+import OverlayFetchingIndicator from '../../../components/OverlayFetchingIndicator'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
 class Register extends React.Component {
+  static propTypes = {
+    onRegister: React.PropTypes.func.isRequired,
+    isFetching: React.PropTypes.bool.isRequired
+  }
+
   constructor(props) {
     super(props)
     this.state = {
@@ -65,7 +71,8 @@ class Register extends React.Component {
     <div className="row">
       <div className="col-xs-12 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
         <h1>Créer un compte</h1>
-        <Paper className="text-center">
+        <Paper className="text-center" style={{position: 'relative'}}>
+          {this.props.isFetching && <OverlayFetchingIndicator />}
           <TextField
             style={{fontWeight: 400}}
             floatingLabelStyle={{fontWeight: 400}}
@@ -105,6 +112,7 @@ class Register extends React.Component {
           style={{marginTop: 5}}
           label={'Valider'}
           primary={true}
+          disabled={this.props.isFetching}
           onTouchTap={this.handleSend}
         />
       </div>

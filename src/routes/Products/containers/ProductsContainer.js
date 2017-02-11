@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import Products from '../components/Products'
 import {queryProducts} from '../modules/products'
 import {addToCart, removeFromCart} from '../../Cart/modules/cart'
+import FetchingIndicator from '../../../components/FetchingIndicator'
 import React from 'react'
 
 class SmartComponent extends React.Component {
@@ -23,7 +24,7 @@ class SmartComponent extends React.Component {
 
   renderLoading() {
     return (
-      <div>Put a loader here :D</div>
+      <FetchingIndicator />
     )
   }
 }

@@ -12,7 +12,8 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => ({
-  client: state.client
+  client: state.client.client,
+  isLoggedIn: state.client.client != undefined
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header)

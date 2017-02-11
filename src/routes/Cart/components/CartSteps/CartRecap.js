@@ -1,4 +1,5 @@
 import React from 'react'
+import {cartPropTypes} from '../../../../proptypes'
 import Paper from 'material-ui/Paper'
 import Subheader from 'material-ui/Subheader'
 import {List, ListItem} from 'material-ui/List'
@@ -7,6 +8,10 @@ import {grey50} from 'material-ui/styles/colors'
 
 
 class CartRecap extends React.Component {
+  static propTypes = {
+      cart: cartPropTypes.isRequired
+  }
+
   constructor(props) {
     super(props)
   }
@@ -41,12 +46,8 @@ class CartRecap extends React.Component {
     </div>
   )
 }
-CartRecap.propTypes = {
-  cart: React.PropTypes.array.isRequired
-}
 
-
-export const CartItemEntry = (props) => (
+const CartItemEntry = (props) => (
   <ListItem
     style={{fontWeight: 400, marginBottom: 0}}
     rightToggle={<div className="text-right" style={{fontSize: 14, fontWeight: 400}}>{props.cartItem.quantity * props.cartItem.product.price} €</div>}

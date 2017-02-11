@@ -7,6 +7,14 @@ import MenuItem from 'material-ui/MenuItem'
 import './Header.scss'
 
 class Header extends React.Component {
+  static propTypes = {
+    isLoggedIn: React.PropTypes.bool.isRequired,
+    client: React.PropTypes.shape({
+      firstName: React.PropTypes.string.isRequired,
+      lastName: React.PropTypes.string.isRequired
+    })
+  }
+
   constructor(props) {
     super(props)
     this.state = {drawerOpen: false}
@@ -18,8 +26,8 @@ class Header extends React.Component {
     <div>
       <AppBar
         className="text-left"
-        title={<span>{this.props.client ? this.props.client.firstName + ' ' +this.props.client.lastName : ''}</span>}
-        iconElementRight={this.props.client ? <FlatButton label="Déconnexion" onTouchTap={this.props.onLogout} /> : <FlatButton label="Connexion" onTouchTap={this.props.onLogin} />}
+        title={<span>{this.props.isLoggedIn ? this.props.client.firstName + ' ' +this.props.client.lastName : ''}</span>}
+        iconElementRight={this.props.isLoggedIn ? <FlatButton label="Déconnexion" onTouchTap={this.props.onLogout} /> : <FlatButton label="Connexion" onTouchTap={this.props.onLogin} />}
         onLeftIconButtonTouchTap={() => this.setState({drawerOpen: true})} />
       <Drawer
         className='routes'

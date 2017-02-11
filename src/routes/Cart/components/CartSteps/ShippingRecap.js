@@ -1,4 +1,5 @@
 import React from 'react'
+import {clientPropTypes, cartPropTypes, addressPropTypes} from '../../../../proptypes'
 import Paper from 'material-ui/Paper'
 import Subheader from 'material-ui/Subheader'
 import TextField from 'material-ui/TextField'
@@ -8,15 +9,11 @@ export class ShippingRecap extends React.Component {
   static propTypes = {
     onResetShipping: React.PropTypes.func.isRequired,
     onEstimateShipping: React.PropTypes.func.isRequired,
-    client: React.PropTypes.shape({
-      login: React.PropTypes.string.isRequired,
-      password: React.PropTypes.string.isRequired,
-      firstName: React.PropTypes.string.isRequired,
-      lastName: React.PropTypes.string.isRequired,
-      paymentServiceId: React.PropTypes.number.isRequired,
-      paymentServiceToken: React.PropTypes.string.isRequired,
-      providerServiceId: React.PropTypes.string.isRequired
-    })
+    onUpdateAddress: React.PropTypes.func.isRequired,
+    estimatedShippingPrice: React.PropTypes.number,
+    client: clientPropTypes.isRequired,
+    cart: cartPropTypes.isRequired,
+    address: addressPropTypes
   }
 
   constructor(props)  {
@@ -39,19 +36,19 @@ export class ShippingRecap extends React.Component {
 
   validateTextFields = () => {
     let hasError = false
-    if (this.props.streetNumber === '') {
+    if (this.props.address.streetNumber === '') {
       this.setState({streetNumberError: 'Champ requis'})
       hasError = true
     }
-    if (this.props.street === '') {
+    if (this.props.address.street === '') {
       this.setState({streetError: 'Champ requis'})
       hasError = true
     }
-    if (this.props.zip === '') {
+    if (this.props.address.zip === '') {
       this.setState({zipError: 'Champ requis'})
       hasError = true
     }
-    if (this.props.city === '') {
+    if (this.props.address.city === '') {
       this.setState({cityError: 'Champ requis'})
       hasError = true
     }

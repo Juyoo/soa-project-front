@@ -1,9 +1,10 @@
 import React from 'react'
+import {productPropTypes} from '../../../proptypes'
+import SmallCartPopOver from '../../Cart/containers/SmallCartPopOverContainer'
 import {GridList, GridTile} from 'material-ui/GridList'
 import IconButton from 'material-ui/IconButton'
 import Snackbar from 'material-ui/Snackbar'
 import AddShoppingCart from 'material-ui/svg-icons/action/add-shopping-cart'
-import SmallCartPopOver from '../../Cart/containers/SmallCartPopOverContainer'
 import {green500 as green} from 'material-ui/styles/colors'
 
 const styles = {
@@ -15,6 +16,12 @@ const styles = {
 }
 
 class Products extends React.Component {
+  static propTypes = {
+    onRemoveFromCart: React.PropTypes.func.isRequired,
+    onAddToCart: React.PropTypes.func.isRequired,
+    products: React.PropTypes.arrayOf(productPropTypes)
+  }
+
   constructor(props) {
     super(props)
     this.state = {

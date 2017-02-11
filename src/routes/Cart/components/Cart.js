@@ -1,11 +1,12 @@
 import React from 'react'
+import {clientPropTypes, cartPropTypes} from '../../../proptypes'
+import FetchingIndicator from '../../../components/FetchingIndicator'
 import CartRecap from './CartSteps/CartRecap'
 import ShippingRecap from './CartSteps/ShippingRecap'
 import PaymentRecap from './CartSteps/PaymentRecap'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import {Step, Stepper, StepLabel} from 'material-ui/Stepper'
-import FetchingIndicator from '../../../components/FetchingIndicator'
 
 class PaymentStepper extends React.Component {
   static propTypes = {
@@ -13,16 +14,8 @@ class PaymentStepper extends React.Component {
     onEstimateShipping: React.PropTypes.func.isRequired,
     onValidateOrder: React.PropTypes.func.isRequired,
     onUpdateAddress: React.PropTypes.func.isRequired,
-    cart: React.PropTypes.array.isRequired,
-    client: React.PropTypes.shape({
-      login: React.PropTypes.string.isRequired,
-      password: React.PropTypes.string.isRequired,
-      firstName: React.PropTypes.string.isRequired,
-      lastName: React.PropTypes.string.isRequired,
-      paymentServiceId: React.PropTypes.number.isRequired,
-      paymentServiceToken: React.PropTypes.string.isRequired,
-      providerServiceId: React.PropTypes.string.isRequired
-    }).isRequired
+    cart: cartPropTypes.isRequired,
+    client: clientPropTypes.isRequired
   }
 
   constructor(props) {

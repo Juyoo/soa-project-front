@@ -6,17 +6,18 @@ import {removeFromCart} from '../../Cart/modules/cart'
 import {estimateShipping, resetShipping, validateOrder} from '../../Cart/modules/shipping'
 import {updateAddress} from '../../Cart/modules/address'
 
-const SmartCompnent = (props) => (
-  <div>
-    {(props.cart && props.cart.length > 0)
-      ? <Cart {...props} />
-      : <div>Houla, tu as pas de produit dans ton panier, va t'en d'ici</div>
-    }
-  </div>
-)
+const SmartCompnent = (props) => {
+  const {onRedirectWhenNoCart, ...rest} = props
+  if (!props.cart || props.cart.length == 0) {
+    onRedirectWhenNoCart()
+    return <div></div>
+  }
+  return (<Cart {...rest} />)
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    onRedirectWhenNoCart: () => browserHistory.push('/products'),
     onGoToPayment: () => browserHistory.push('/payment'),
     onUpdateAddress: (address) => dispatch(updateAddress(address)),
     onRemoveFromCart: (product) => dispatch(removeFromCart(product)),
@@ -28,7 +29,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => ({
   cart: state.cart,
-  client: state.client,
+  client: state.client.client,
   shipping: state.shipping,
   address: state.address
 })

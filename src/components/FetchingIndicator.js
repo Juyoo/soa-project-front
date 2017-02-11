@@ -7,7 +7,8 @@ export const FetchingIndicator = (props) => (
   </div>
 )
 FetchingIndicator.propTypes = {
-  color: React.PropTypes.string
+  color: React.PropTypes.string,
+  style: React.PropTypes.objectOf(React.PropTypes.any)
 }
 
 export default FetchingIndicator

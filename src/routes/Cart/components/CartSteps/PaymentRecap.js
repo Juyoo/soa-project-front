@@ -1,4 +1,5 @@
 import React from 'react'
+import {cartPropTypes} from '../../../../proptypes'
 import {CartItemEntry} from './CartRecap'
 import Paper from 'material-ui/Paper'
 import Subheader from 'material-ui/Subheader'
@@ -7,6 +8,11 @@ import Divider from 'material-ui/Divider'
 import {grey50} from 'material-ui/styles/colors'
 
 class PaymentRecap extends React.Component {
+  static propTypes = {
+    estimatedShippingPrice: React.PropTypes.number.isRequired,
+    cart: cartPropTypes.isRequired
+  }
+
   constructor(props) {
     super(props)
   }

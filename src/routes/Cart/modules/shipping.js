@@ -31,7 +31,7 @@ export const validateOrder = (client, cart, address) => {
     })
     .then(response => {
       dispatch(validateOrderSuccess(response.data))
-      dispatch(emptyCart())
+      setTimeout(() => dispatch(emptyCart()), 300)
       browserHistory.push('/products')
     })
     .catch(response => {

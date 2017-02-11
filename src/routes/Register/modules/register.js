@@ -13,6 +13,11 @@ export const LOGOUT = 'LOGOUT'
 // ------------------------------------
 // Actions
 // ------------------------------------
+export const registerAttempt = (error) => ({
+  error,
+  type: REGISTER_ATTEMPT
+})
+
 export const registerError = (error) => ({
   error,
   type: REGISTER_ERROR
@@ -25,6 +30,7 @@ export const registerSuccess = (client) => ({
 
 export const register = (client) => {
   return dispatch => {
+    dispatch(registerAttempt())
     axios({
       url: 'http://localhost:8080/client/register',
       method: 'post',
@@ -48,6 +54,7 @@ export const logout = () => ({
 
 export const actions = {
   register,
+  registerAttempt,
   registerSuccess,
   registerError,
   logout
@@ -57,22 +64,28 @@ export const actions = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
+  [REGISTER_ATTEMPT]   : (state, action) => {
+    return Object.assign({}, state, {isFetching: true, isLoggedIn: false})
+  },
   [REGISTER_SUCCESS]   : (state, action) => {
-    return action.client
+    return Object.assign({}, state, {client: action.client, isFetching: false, isLoggedIn: true})
   },
   [REGISTER_ERROR]     : (state, action) => {
-    return state
-    // push an error somehow
+    return Object.assign({}, state, {isFetching: false, isLoggedIn: false})
   },
   [LOGOUT]              : (state, action) => {
-    return null
+    return Object.assign({}, state, {client: undefined, isLoggedIn: false})
   }
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = null
+const initialState = {
+  isLoggedIn: false,
+  client: undefined,
+  isFetching: false
+}
 
 export default function registerReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
