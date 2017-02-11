@@ -19,16 +19,17 @@ const styles = {
 }
 
 export const OverlayFetchingIndicator = (props) => {
-  const {style} = props
+  const {style, containerStyle, ...rest} = props
   return (
-    <div className="text-center" style={styles.container}>
-      <CircularProgress {...props} style={Object.assign({}, styles.progress, style)} />
+    <div className="text-center" style={Object.assign({}, styles.container, containerStyle)}>
+      <CircularProgress {...rest} style={Object.assign({}, styles.progress, style)} />
     </div>
   )
 }
 OverlayFetchingIndicator.propTypes = {
   color: React.PropTypes.string,
-  style: React.PropTypes.objectOf(React.PropTypes.any)
+  style: React.PropTypes.objectOf(React.PropTypes.any),
+  containerStyle: React.PropTypes.objectOf(React.PropTypes.any)
 }
 
 export default OverlayFetchingIndicator

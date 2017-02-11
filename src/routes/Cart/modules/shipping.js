@@ -7,6 +7,7 @@ import {emptyCart} from './cart'
 // ------------------------------------
 export const VALIDATE_ORDER_SUCCESS = 'VALIDATE_ORDER_SUCCESS'
 export const VALIDATE_ORDER_ERROR = 'VALIDATE_ORDER_ERROR'
+export const ESTIMATE_SHIPPING_COST_ATTEMPT = 'ESTIMATE_SHIPPING_COST_ATTEMPT'
 export const ESTIMATE_SHIPPING_COST_SUCCESS = 'ESTIMATE_SHIPPING_COST_SUCCESS'
 export const ESTIMATE_SHIPPING_COST_ERROR = 'ESTIMATE_SHIPPING_COST_ERROR'
 export const RESET_SHIPPING = 'RESET_SHIPPING'
@@ -50,8 +51,14 @@ export const validateOrderError = (error) => ({
   type: VALIDATE_ORDER_ERROR
 })
 
+export const estimateShippingAttempt = () => ({
+  type: ESTIMATE_SHIPPING_COST_ATTEMPT
+})
+
 export const estimateShipping = (client, cart, address) => {
   return dispatch => {
+    dispatch(estimateShippingAttempt())
+
     axios({
       url: 'http://localhost:8080/order/estimate',
       method: 'post',
@@ -93,6 +100,7 @@ export const actions = {
   validateOrderSuccess,
   validateOrderError,
   estimateShipping,
+  estimateShippingAttempt,
   estimateShippingSuccess,
   estimateShippingError,
   resetShipping
@@ -108,14 +116,25 @@ const ACTION_HANDLERS = {
   [VALIDATE_ORDER_ERROR]            : (state, action) => {
     return state
   },
+  [ESTIMATE_SHIPPING_COST_ATTEMPT]  : (state, action) => {
+    return Object.assign({}, state, {isFetchingEstimate: true})
+  },
   [ESTIMATE_SHIPPING_COST_SUCCESS]  : (state, action) => {
-    return Object.assign({}, state, {estimatedShippingPrice: parseFloat(action.price.price.toFixed(2)), error: undefined})
+    return Object.assign({}, state, {
+      estimatedShippingPrice: parseFloat(action.price.price.toFixed(2)),
+      error: undefined,
+      isFetchingEstimate: false
+    })
   },
   [ESTIMATE_SHIPPING_COST_ERROR]    : (state, action) => {
-    return Object.assign({}, state, {estimatedShippingPrice: undefined, error: action.error})
+    return Object.assign({}, state, {
+      estimatedShippingPrice: undefined,
+      error: action.error,
+      isFetchingEstimate: false
+    })
   },
   [RESET_SHIPPING]         : (state, action) => {
-    return Object.assign({}, state, {estimatedShippingPrice: undefined, error: undefined})
+    return Object.assign({}, state, { estimatedShippingPrice: undefined, error: undefined })
   }
 }
 
@@ -124,7 +143,8 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 const initialState = {
   estimatedShippingPrice: undefined,
-  error: undefined
+  error: undefined,
+  isFetchingEstimate: false
 }
 
 export default function shippingReducer(state = initialState, action) {

@@ -14,6 +14,7 @@ class PaymentStepper extends React.Component {
     onEstimateShipping: React.PropTypes.func.isRequired,
     onValidateOrder: React.PropTypes.func.isRequired,
     onUpdateAddress: React.PropTypes.func.isRequired,
+    isFetchingEstimate: React.PropTypes.bool.isRequired,
     cart: cartPropTypes.isRequired,
     client: clientPropTypes.isRequired
   }
@@ -65,6 +66,7 @@ class PaymentStepper extends React.Component {
           onResetShipping={this.props.onResetShipping}
           onEstimateShipping={this.props.onEstimateShipping}
           onUpdateAddress={this.props.onUpdateAddress}
+          isFetchingEstimate={this.props.isFetchingEstimate}
           address={this.props.address} />
       case 2:
         return <PaymentRecap

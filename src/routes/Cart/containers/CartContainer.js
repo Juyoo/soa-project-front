@@ -31,7 +31,8 @@ const mapStateToProps = (state) => ({
   cart: state.cart,
   client: state.client.client,
   shipping: state.shipping,
-  address: state.address
+  address: state.address,
+  isFetchingEstimate: state.shipping.isFetchingEstimate
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SmartCompnent)

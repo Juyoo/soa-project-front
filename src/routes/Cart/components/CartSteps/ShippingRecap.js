@@ -1,5 +1,6 @@
 import React from 'react'
 import {clientPropTypes, cartPropTypes, addressPropTypes} from '../../../../proptypes'
+import OverlayFetchingIndicator from '../../../../components/OverlayFetchingIndicator'
 import Paper from 'material-ui/Paper'
 import Subheader from 'material-ui/Subheader'
 import TextField from 'material-ui/TextField'
@@ -11,6 +12,7 @@ export class ShippingRecap extends React.Component {
     onEstimateShipping: React.PropTypes.func.isRequired,
     onUpdateAddress: React.PropTypes.func.isRequired,
     estimatedShippingPrice: React.PropTypes.number,
+    isFetchingEstimate: React.PropTypes.bool.isRequired,
     client: clientPropTypes.isRequired,
     cart: cartPropTypes.isRequired,
     address: addressPropTypes
@@ -93,7 +95,8 @@ export class ShippingRecap extends React.Component {
   render = () => (
     <div className="row">
       <div className="col-xs-12">
-        <Paper style={{padding: 15}}>
+        <Paper style={{padding: 15, position: 'relative'}}>
+          {this.props.isFetchingEstimate && <OverlayFetchingIndicator containerStyle={{marginLeft: -15, marginTop: -15}} />}
           <Subheader style={{marginLeft: -15}}>Addresse</Subheader>
           <TextField
             style={{fontWeight: 400, marginRight: 50}}
@@ -133,6 +136,7 @@ export class ShippingRecap extends React.Component {
               style={{marginLeft: 15}}
               label="Calculer les frais de livraisons"
               primary={true}
+              disabled={this.props.isFetchingEstimate}
               onTouchTap={this.handleEstimateShipping}
             />
           </div>
